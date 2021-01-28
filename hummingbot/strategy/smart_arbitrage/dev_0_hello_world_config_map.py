@@ -9,10 +9,10 @@ from hummingbot.client.settings import (
 
 
 #def trading_pair_prompt():
-#    market = dev_0_hello_world_config_map.get("market").value
-#    example = EXAMPLE_ASSETS.get(market)
-#    return "Enter a single token to fetch its balance on %s%s >>> " \
-#           % (market, f" (e.g. {example})" if example else "")
+    market = dev_0_hello_world_config_map.get("market").value
+    example = EXAMPLE_ASSETS.get(market)
+    return "Enter a single token to fetch its balance on %s%s >>> " \
+           % (market, f" (e.g. {example})" if example else "")
 
 
 def str2bool(value: str):
@@ -29,7 +29,7 @@ dev_0_hello_world_config_map = {
                   prompt="Enter the name of the exchange >>> ",
                   validator=validate_exchange,
                   on_validated=lambda value: required_exchanges.append(value)),
-#    "asset_trading_pair":
-#        ConfigVar(key="asset_trading_pair",
-#                  prompt=trading_pair_prompt),
+    "asset_trading_pair":
+        ConfigVar(key="asset_trading_pair",
+                  prompt=trading_pair_prompt),
 }
