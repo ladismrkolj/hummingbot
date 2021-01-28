@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    branches: [ master, development ]
+    branches: [ master, development, smart_arbitrage ]
   pull_request:
     branches: [ master, development ]
     types: [ready_for_review, opened, synchronize, reopened]
