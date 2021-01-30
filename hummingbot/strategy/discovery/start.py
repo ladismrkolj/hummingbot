@@ -24,7 +24,7 @@ async def save_discovery_output(self: "hummingbot.client.hummingbot_application.
     """
     fname: str = f"discovery_strategy_output_{pd.Timestamp.now().strftime('%Y-%m-%d-%H-%M-%S')}.csv"
     path = join(dirname(__file__), f"../../../logs/{fname}")
-    self.logger().info(f"Saving discovery output...")
+    self.logger().info("Saving discovery output...")
 
     df_list: List[pd.DataFrame] = self.strategy.get_status_dataframes()
     df_titles = ["Market Stats", "Arbitrage Opportunities", "Conversion Rates"]
