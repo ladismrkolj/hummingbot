@@ -11,7 +11,6 @@ from typing import (
 )
 
 from hummingbot.core.clock cimport Clock
-from hummingbot.core.utils.exchange_rate_conversion import ExchangeRateConversion
 from hummingbot.logger import HummingbotLogger
 from hummingbot.strategy.discovery.discovery_market_pair import DiscoveryMarketPair
 from hummingbot.strategy.arbitrage import ArbitrageStrategy
@@ -190,13 +189,13 @@ cdef class DiscoveryStrategy(StrategyBase):
                     matching_pair.add((
                         self._market_info[market_1]["base_quote_to_trading_pair"][(base_1, quote_1)],
                         self._market_info[market_2]["base_quote_to_trading_pair"][(equivalent_base_1.upper(),
-                                                                            equivalent_quote_1.upper())]
+                                                                                   equivalent_quote_1.upper())]
                     ))
                 elif (equivalent_base_1.lower(), equivalent_quote_1.lower()) in market_2_base_quote:
                     matching_pair.add((
                         self._market_info[market_1]["base_quote_to_trading_pair"][(base_1, quote_1)],
                         self._market_info[market_2]["base_quote_to_trading_pair"][(equivalent_base_1.lower(),
-                                                                            equivalent_quote_1.lower())]
+                                                                                   equivalent_quote_1.lower())]
                     ))
         return matching_pair
 
@@ -267,7 +266,7 @@ cdef class DiscoveryStrategy(StrategyBase):
             object market_trading_pair_2 = MarketTradingPairTuple(market_pair.market_2, *matching_pair[1])
 
         for buy_market_trading_pair, sell_market_trading_pair in [(market_trading_pair_1, market_trading_pair_2),
-                                                                (market_trading_pair_2, market_trading_pair_1)]:
+                                                                  (market_trading_pair_2, market_trading_pair_1)]:
             try:
                 total_bid_value, total_ask_value = s_decimal_0, s_decimal_0
                 total_profitable_base_amount = s_decimal_0
@@ -304,14 +303,8 @@ cdef class DiscoveryStrategy(StrategyBase):
                 # for non profitable pairs calculate the negative profitability for their top bid and ask
                 # or for profitability lower than targeted, calculate with the best bid and ask
                 if not profitable_orders or profitability == 0:
-                    sell_price_adjusted = ExchangeRateConversion.get_instance().adjust_token_rate(
-                        sell_market_trading_pair.quote_asset,
-                        sell_market_trading_pair.get_price(False)
-                    )
-                    buy_price_adjusted = ExchangeRateConversion.get_instance().adjust_token_rate(
-                        buy_market_trading_pair.quote_asset,
-                        buy_market_trading_pair.get_price(True)
-                    )
+                    sell_price_adjusted = 1
+                    buy_price_adjusted = 1
                     profitability = sell_price_adjusted / buy_price_adjusted
 
                 ret[(buy_market_trading_pair.market.name,
@@ -394,9 +387,9 @@ cdef class DiscoveryStrategy(StrategyBase):
             trading_pairs = market_info["markets"]
             exchange_name = exchange_class.name
             for trading_pair, usd_volume, base_asset, quote_asset in zip(trading_pairs.index,
-                                                                   trading_pairs.USDVolume,
-                                                                   trading_pairs.baseAsset,
-                                                                   trading_pairs.quoteAsset):
+                                                                         trading_pairs.USDVolume,
+                                                                         trading_pairs.baseAsset,
+                                                                         trading_pairs.quoteAsset):
                 try:
                     order_book = exchange_class.get_order_book(trading_pair)
                     ask, bid = order_book.get_price(True), order_book.get_price(False)
@@ -481,7 +474,7 @@ cdef class DiscoveryStrategy(StrategyBase):
                 asset_set.add(q)
 
         for asset in asset_set:
-            rate = ExchangeRateConversion.get_instance().adjust_token_rate(asset, Decimal("1.0"))
+            rate = 1
             if rate != Decimal("1.0"):
                 data.append([asset, rate])
 
