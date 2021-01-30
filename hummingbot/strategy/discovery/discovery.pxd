@@ -26,10 +26,10 @@ cdef class DiscoveryStrategy(StrategyBase):
     cdef c_process_market_pair(self, object market_pair)
     cdef c_tick(self, double timestamp)
     cdef object c_calculate_arbitrage_discovery(self,
-                                              object market_pair,
-                                              set matching_pairs,
-                                              double target_amount,
-                                              double target_profitability)
+                                                object market_pair,
+                                                set matching_pairs,
+                                                double target_amount,
+                                                double target_profitability)
     cdef c_calculate_market_stats(self, object market_pair, dict exchange_market_info)
     cdef dict c_calculate_single_arbitrage_profitability(self,
                                                          object market_pair,
