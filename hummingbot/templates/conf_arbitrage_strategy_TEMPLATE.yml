@@ -13,6 +13,7 @@ primary_market: null
 secondary_market: null
 primary_market_trading_pair: null
 secondary_market_trading_pair: null
+tertiary_market_trading_pair: null
 
 # Minimum profitability target required to place an order
 # Expressed in percentage value, e.g. 1 = 1% target profit

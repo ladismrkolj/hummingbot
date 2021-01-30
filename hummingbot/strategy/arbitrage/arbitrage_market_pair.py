@@ -11,3 +11,4 @@ class ArbitrageMarketPair(NamedTuple):
     """
     first: MarketTradingPairTuple
     second: MarketTradingPairTuple
+    third: MarketTradingPairTuple

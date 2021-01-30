@@ -22,6 +22,11 @@ def validate_secondary_market_trading_pair(value: str) -> Optional[str]:
     return validate_market_trading_pair(secondary_market, value)
 
 
+def validate_tertiary_market_trading_pair(value: str) -> Optional[str]:
+    primary_market = arbitrage_config_map.get("primary_market").value
+    return validate_market_trading_pair(primary_market, value)
+
+
 def primary_trading_pair_prompt():
     primary_market = arbitrage_config_map.get("primary_market").value
     example = EXAMPLE_PAIRS.get(primary_market)
@@ -67,6 +72,11 @@ arbitrage_config_map = {
         prompt=secondary_trading_pair_prompt,
         prompt_on_new=True,
         validator=validate_secondary_market_trading_pair),
+    "tertiary_market_trading_pair": ConfigVar(
+        key="secondary_market_trading_pair",
+        prompt=secondary_trading_pair_prompt,
+        prompt_on_new=True,
+        validator=validate_tertiary_market_trading_pair),
     "min_profitability": ConfigVar(
         key="min_profitability",
         prompt="What is the minimum profitability for you to make a trade? (Enter 1 to indicate 1%) >>> ",
